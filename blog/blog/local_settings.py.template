@@ -2,8 +2,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = '4y0%r-c0gt#7wm1@6aso#v1r-v!=5zn0&xk@41tx&yr3)ce8so'
-
+SECRET_KEY = 'ec48$vpr^5)j$5ci!^835^dwpmziyffkw3)0d6$lz-q8qete5j'
 
 DATABASES = {
     'default': {
@@ -15,8 +14,12 @@ DATABASES = {
     }
 }
 
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media')
 
 EMAIL_PORT = ''
 EMAIL_HOST_PASSWORD = ''
+
+AUTH_USER_MODEL = 'user_app.CustomUser'
