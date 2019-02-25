@@ -1,0 +1,25 @@
+.idea
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+
+### Django ###
+*.log
+*.pot
+*.pyc
+*.mo
+
+__pycache__/
+local_settings.py
+
+cityvenv/
+cityenv/
+media/
+.idea/
+.blog_venv/
+db.sqlite3
+
+static/
