@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Blog</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body>
+
+	<header>
+
+	  	<div class="row">
+			<div class="col-md-2 col-md-offset-5 text-center">
+				<a href="{% url 'home_app:home_url' %}">Home</a>
+			</div>
+		</div>
+
+		<div class="row">
+
+			<div class="col-xs-12 col-md-1  text-center">
+				<a href=https://github.com/Pyrigok/blog>Github</a>
+			</div>
+
+			<div class="col-md-1 col-md-offset-4 text-right">
+				<a href="{% url 'user_app:authors_url' %}">Our Authors</a>
+			</div>
+
+			{% if request.user.is_authenticated %}
+				<div class="col-xs-12 col-md-2 text-left">
+					<a href="{% url 'article_app:create_url' %}">Create something</a>
+				</div>
+
+				<div class="col-xs-12 col-md-2 col-md-offset-2 text-center">
+					<a href="#">{{ user.username }}</a>
+					<a href="{% url 'user_app:logout_url' %}">Logout</a>
+				</div>
+
+			{% else %}
+
+				<div class="col-xs-12 col-md-2 col-md-offset-8 text-right">
+					<a href="{% url 'user_app:signup_url' %}">Registration</a> |
+					<a href="{% url 'user_app:login_url' %}">Login</a>
+				</div>
+
+			{% endif %}
+
+		</div>
+
+	</header>
+
+	<div class="row">
+		<div class="col-md-2 col-md-offset-2">
+			<p>Site Info</p>
+		</div>
+		<div class="col-md-4">
+			{% block status_message %}
+				{% if request.GET.status_message %}
+					<div class="alert alert-warning" role="alert">{{ request.GET.status_message }}
+					</div>
+				{% endif %}
+       		{% endblock %}
+		</div>
+	</div>
+
+
+	{% block content %}
+	{% endblock content %}
+
+
+	<footer>
+
+		<div class="row">
+
+			<div class="col-xs-12 col-md-4">
+
+				<p>&copy; 2019 <span>Blog</span></p>
+			</div>
+
+			<div class="col-xs-12 col-md-2 col-md-offset-6"><p>
+				 Produced by <span style="font-family: 'Pacifico'; font-style: italic">Vasyl Pyrih</span></p>
+			</div>
+		</div>
+
+	</footer>
+
+	<!-- jquery -->
+	<script
+	  src="https://code.jquery.com/jquery-2.2.4.js"
+	  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+	  crossorigin="anonymous"></script>
+
+	 <!-- jQuery Cookie -->
+	 <script src="{% static 'scripts/jquery.cookie.js' %}"></script>
+	 <!--<script src="../../static/scripts/jquery.cookie.js"></script>-->
+
+	<!-- bootstrap js -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<!-- our custom cookies -->
+	<script src="{% static 'scripts/cookie.js' %}"></script>
+	<!--<script src="../../static/scripts/cookie.js"></script>-->
+
+</body>
+</html>

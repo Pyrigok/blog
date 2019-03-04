@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'article_app',
+    'home_app',
     'user_app',
 ]
 
@@ -84,12 +86,6 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 
 # Password validation
@@ -134,5 +130,5 @@ USE_TZ = True
 SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/accounts/login/'
+LOGIN_URL = '/users/login/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

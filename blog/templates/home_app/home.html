@@ -1,0 +1,68 @@
+{% extends 'home_app/base.html' %}
+
+{% block content %}
+
+	<div class="container">
+
+		<div class="row">
+
+			<div class="col-md-4 " id='category_selector_read'>
+				<button class="btn" id='read_button'>Show All Stories</button>
+				<p>Filter by <select name="" id="category_selector">
+
+						<option value="">categories</option>
+
+						{% for category in categories %}
+							<option value="{{ category.id }}">
+								{{ category.category_name }}
+							</option>
+						{% endfor %}
+
+					</select>
+					or <select name="" id="author_selector">
+
+						<option value="">authors</option>
+
+						{% for author in authors %}
+							<option value="{{ author.id }}">
+								{{ author.first_name }} {{ author.last_name }}
+							</option>
+						{% endfor %}
+
+					</select>
+				</p>
+			</div> <!-- end category_selector div -->
+
+			<div class="col-md-8 articles_info">
+
+				{% if articles %}
+					{% for entry in articles %}
+						<div class="col-md-6" style="cursor: pointer;">
+							<a href="{% url 'article_app:read_article_url' %}" id="read_full_article">
+								<p>{{ entry.category }}</p>
+								<p>{{ entry.author.first_name }} {{ entry.author.last_name }}</p>
+								<p>{{ entry.title }}</p>
+								<p>{{ entry.created_on }}</p>
+								<article>{{ entry.content }}</article>
+								<input type="hidden" value="{{ entry.id }}">
+							</a>
+							<hr>
+						</div>
+					{% endfor %}
+				{% else %}
+
+					<p>No article by this filter!</p>
+
+				{% endif %}
+
+
+
+
+			</div> <!-- end div.articles -->
+
+		</div> <!-- end row -->
+
+	</div> <!-- end container -->
+
+
+{% endblock content %}

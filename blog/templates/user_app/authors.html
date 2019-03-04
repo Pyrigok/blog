@@ -1,0 +1,41 @@
+{% extends 'home_app/base.html' %}
+{% load static %}
+
+{% block content %}
+
+	<div class="container">
+
+		<div class="row">
+
+			{% for entry in authors %}
+
+
+				<div class="col-md-4">
+					<div class="col-md-3">
+						{% if entry.photo %}
+							<img src="{{ entry.photo.url }}" height="170px" width='130px' alt="photo">
+						{% else %}
+							<img src="{% static 'img/images.png' %}" height="170px" width='130px' alt="photo">
+							<!--<img src='../../static/img/images.png' height="170px" width='130px' alt="photo">-->
+						{%endif %}
+					</div>
+
+					<div class="col-md-6 col-md-offset-2">
+						<p>{{ entry.user.first_name }} {{ entry.user.last_name }}</p>
+						<p>Interests - {{ entry.interests }}</p>
+						<p>Registered - {{ entry.created_on }}</p>
+						<a href="#">All stories of {{ entry.user.first_name }}</a>
+						<hr>
+					</div>
+
+				</div>
+
+
+			{% endfor %}
+
+		</div> <!-- end row -->
+
+	</div> <!-- end container -->
+
+
+{% endblock content %}

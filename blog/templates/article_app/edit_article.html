@@ -1,0 +1,27 @@
+{% extends 'home_app/base.html' %}
+
+{% block content %}
+	<div class="col-md-12 text-center">
+
+	<h1>Editing Page</h1>
+
+		<form method='post'>
+			{% csrf_token %}
+			{{ form.as_p }}
+
+			<button class="btn btn-default" value type="submit" name='Update'>Update</button>
+			<a href="{% url 'article_app:read_article_url' %}">Cancel</a>
+		</form>
+	</div>
+
+<!-- 	<form action="#"
+		method="post"
+		>
+			{%csrf_token%}
+
+		{% for entry in art %}
+			<textarea name="content" id="" cols="30" rows="10">{{entry.content}}</textarea>
+		{%endfor%}
+</form> -->
+
+{% endblock content %}

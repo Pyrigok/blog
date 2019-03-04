@@ -1,0 +1,54 @@
+{% extends 'home_app/base.html' %}
+
+{% block content %}
+
+	<div class="container">
+
+		<div class="row">
+
+			{% for entry in selected_article %}
+
+				<div class="col-md-6 col-md-offset-3">
+					<p>{{ entry.title }} </p>
+					<p>{{ entry.created_on }} </p>
+					<article>{{ entry.content }} </article>
+
+					{% for like in article_set %}
+						<p>{{ like.likes }} likes</p>
+					{% endfor %}
+
+					<a href="{% url 'article_app:edit_article_url' pk=entry.id %}">
+						<button class="btn">Edit Article</button>
+					</a>
+
+
+					<a href="{% url 'article_app:delete_article_url' pk=entry.id %}">
+						<button class="btn">Delete Article</button>
+					</a>
+
+							<form action="{% url 'article_app:read_article_url' %}"
+									method='post'
+									>
+										{% csrf_token %}
+
+									{% if liked %}
+
+										<button type="submit" name='dislike_button' value="{{ entry.id }}" class="btn">Disike</button>
+
+									{% else %}
+
+										<button type="submit" name='like_button' value="{{ entry.id }}" class="btn">Like</button>
+
+									{% endif %}
+
+							</form>
+				</div>
+
+			{% endfor %}
+
+		</div> <!-- end row -->
+
+	</div> <!-- end container -->
+
+
+{% endblock content %}
