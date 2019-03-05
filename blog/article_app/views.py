@@ -8,10 +8,11 @@ from blog.util import get_read_selected_category, get_read_selected_author, get_
 from article_app.forms import CreateArticleForm
 from article_app.models.article_models import Article
 from article_app.models.category_models import Category
+from home_app.permissions import NeedLogin
 from user_app.models import CustomUser
 
 
-class CreateArticleView(View):
+class CreateArticleView(NeedLogin, View):
 	"""CBV for writing new article"""
 
 	model = Article
@@ -44,10 +45,10 @@ class ReadArticleView(TemplateView):
 		return render(request, 'article_app/read_article.html', {'selected_article': selected_article})
 
 
-class EditArticleView(UpdateView):
+class EditArticleView(NeedLogin, UpdateView):
 	model = Article
 	fields = ['title', 'content', 'category']
-	template_name_suffix = '_update_form'
+	template_name = 'article_app/edit_article.html'
 
 	def get_success_url(self):
 		return '%s?status_message=Article Edited!' %(reverse('article_app:read_article_url'))
@@ -60,9 +61,9 @@ class EditArticleView(UpdateView):
 		return super(EditArticleView, self).dispatch(*args, **kwargs)
 
 
-class DeleteArticleView(DeleteView):
+class DeleteArticleView(NeedLogin, DeleteView):
 	model = Article
-	template_name_suffix = '_delete_form'
+	template_name = 'article_app/delete_article.html'
 
 	def get_success_url(self):
 		return '%s?status_message=Article Deleted!' %(reverse('home_app:home_url'))

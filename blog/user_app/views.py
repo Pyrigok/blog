@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 
+from home_app.permissions import NeedLogin
 from user_app.models import CustomUser
 from user_app.forms import CustomUserCreationForm, LoginForm, UserForm
 
@@ -40,7 +41,7 @@ class LoginView(TemplateView):
         return HttpResponse("Invalid login details given")
 
 
-class LogoutView(RedirectView):
+class LogoutView(NeedLogin, RedirectView):
 
     def get(self, request, *args, **kwargs):
         logout(request)
