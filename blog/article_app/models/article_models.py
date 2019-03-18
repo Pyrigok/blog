@@ -29,7 +29,7 @@ class Article(models.Model):
         verbose_name=u'Article category')
 
     content = models.CharField(
-        max_length=1000,
+        max_length=10000,
         blank=False,
         verbose_name=u'Article content')
 

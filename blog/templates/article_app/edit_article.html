@@ -1,17 +1,22 @@
 {% extends 'home_app/base.html' %}
 
+{% block title %}Updating current article{% endblock %}
 {% block content %}
-	<div class="col-md-12 text-center">
 
-	<h1>Editing Page</h1>
-
-		<form method='post'>
-			{% csrf_token %}
-			{{ form.as_p }}
-
-			<button class="btn btn-default" value type="submit" name='Update'>Update</button>
-			<a href="{% url 'article_app:read_article_url' %}">Cancel</a>
-		</form>
+	<div class="row">
+		<hr>
+		<div class="col-xs-12 text-center">
+			<form method='post'>
+				{% csrf_token %}
+				{{ form.as_p }}
+				
+				<div class="col-xs-12 col-md-7 col-md-offset-1 text-right">
+					<button type="submit" name='Update'>Update</button>
+					<a href="{% url 'article_app:read_article_url' %}">Cancel</a>
+				</div>
+				
+			</form>
+		</div>
 	</div>
 
 {% endblock content %}

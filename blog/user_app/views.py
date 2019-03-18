@@ -4,7 +4,7 @@ from django.views.generic import CreateView, FormView, RedirectView, TemplateVie
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse#, reverse_lazy
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
@@ -28,6 +28,11 @@ class LoginView(TemplateView):
     # form_class = LoginForm
     template_name = 'user_app/login.html'
 
+    def get(self, request):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect('/article/articles/')
+        return render(request, 'user_app/login.html', {})
+
     def post(self, request):
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -36,9 +41,11 @@ class LoginView(TemplateView):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect('/article/articles/')
             return HttpResponse("Your account was inactive.")
-        return HttpResponse("Invalid login details given")
+        else:
+            return HttpResponseRedirect('%s?status_message=%s' %(reverse('user_app:login_url'), 'This account does not exist!'))
+            #return HttpResponse("Invalid login details given")
 
 
 class LogoutView(NeedLogin, RedirectView):
@@ -67,7 +74,7 @@ class SignUpView(View):
 
     def get(self, request):
         if request.user.is_authenticated:
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/article/articles/')
         custom_form = CustomUserCreationForm()
         return render(request, 'user_app/signup.html', {'form': self.form, 'custom_form': custom_form})
 
@@ -86,3 +93,12 @@ class SignUpView(View):
             return HttpResponseRedirect('/users/login/')
 
         return render(request, 'user_app/signup.html', {'error': self.form.non_field_errors(), 'form': self.form})
+
+
+class UpdateUserView(NeedLogin, UpdateView):
+    """CBV for update user info"""
+
+    model = User
+    fields = ['username', 'first_name', 'last_name', 'email']
+    template_name = 'user_app/user_profile.html'
+    success_url = '/article/articles/'

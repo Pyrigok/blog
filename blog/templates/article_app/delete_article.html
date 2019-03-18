@@ -1,18 +1,22 @@
 {% extends 'home_app/base.html' %}
 
+{% block title %}Deleting article{% endblock %}
 {% block content %}
-	<div class="col-xs-md text-center">
+	<div class="row">
+		<div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
+			<hr>
+			<form method='post'>
+				{% csrf_token %}
+				<h3>Are you sure you want delete this article?</h3>
+				{{ form.as_p }}
+				
+				<div class="col-xs-12 col-md-7 col-md-offset-4 text-right">
+					<button type="submit" class='delete_button'>Delete</button>
+					<a href="{% url 'article_app:read_article_url' %}" class="cancel_button">Cancel</a>
+				</div>
 
-	<h1>Deleting Page</h1>
-
-		<form method='post'>
-			{% csrf_token %}
-			<h3>'Are you sure you want delete this article?'</h3>
-			{{ form.as_p }}
-
-			<button class="btn btn-danger" type="submit">Delete</button>
-			<a href="{% url 'article_app:read_article_url' %}">Cancel</a>
-		</form>
+			</form>
+		</div>
 	</div>
 
 {% endblock content %}

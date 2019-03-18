@@ -28,4 +28,5 @@ class CustomUser(models.Model):
         return User.objects.get(pk=request.user.pk)
 
     def __str__(self):
-        return '%s, %s, %s, %s' % (self.user.username, self.user.first_name, self.user.last_name, self.user.email)
+        return '%s, %s, %s, %s, %s' % (
+            self.user.username, self.user.first_name, self.user.last_name, self.user.email, self.photo)

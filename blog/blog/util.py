@@ -54,18 +54,18 @@ def get_read_selected_author(request):
 
 
 # get selected article's id for reading selected articles in a new page
-def get_selected_articles(request):
+# def get_selected_articles(request):
 
-    pk = request.COOKIES.get('selected_article_read')
+#     pk = request.COOKIES.get('selected_article_read')
 
-    if pk:
-        from article_app.models.article_models import Article
-        try:
-            selected_article = Article.objects.get(pk=int(pk))
+#     if pk:
+#         from article_app.models.article_models import Article
+#         try:
+#             selected_article = Article.objects.get(pk=int(pk))
 
-        except Article.DoesNotExist:
-            return None
-        else:
-            return selected_article
-    else:
-        return None
+#         except Article.DoesNotExist:
+#             return None
+#         else:
+#             return selected_article
+#     else:
+#         return None

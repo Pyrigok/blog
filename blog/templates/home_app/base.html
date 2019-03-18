@@ -2,109 +2,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Blog</title>
+<meta charset="UTF-8">
+<title>Blog</title>
 
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 </head>
 <body>
 
-	<header>
+<header>
+	<ul>
+        <li>
+            <a href="{% url 'home_app:home_url' %}" class='menu__linl'>Home
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'article_app:articles_url' %}" class='menu__linl'>Articles
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'user_app:authors_url' %}" class='menu__linl'>Authors
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li>
+            <a href="{% url 'article_app:create_url' %}" class='menu__linl'>Create
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'user_app:update_url' pk=user.pk %}" class='menu__linl'> 
+            		<!-- {% if user.first_name %}
+            			{{ user.first_name }} {{ user.last_name }}
+                        
+            		{% else %}
+            			{{ user.username }}
+                        
+            		{% endif %} -->
+                                            {{ user.username }}
 
-	  	<div class="row">
-			<div class="col-md-2 col-md-offset-5 text-center">
-				<a href="{% url 'home_app:home_url' %}">Home</a>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'user_app:logout_url' %}" class='menu__linl'>Logout
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </li>
+        {% else %}
+        <li>
+            <a href="{% url 'user_app:signup_url' %}" class='menu__linl'>Registration
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'user_app:login_url' %}" class='menu__linl'>Login
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+
+    <hr style='position: relative; top:20px; border-top: 1px solid white;'>
+
+
+</header>
+
+<div class="row">
+
+<div class="col-xs-12 col-md-6 col-md-offset-3 text-center title_div">
+	<h2>{% block title %}{% endblock %}</h2>			
+</div>
+
+<div class="col-xs-12 col-md-4 col-md-offset-4 text-center">
+	{% block status_message %}
+		{% if request.GET.status_message %}
+			<div class="alert alert-warning status_message" role="alert">{{ request.GET.status_message }}
 			</div>
-		</div>
+		{% endif %}
+	{% endblock %}
+</div>
 
-		<div class="row">
+<div class="container">
+{% block content %}
+{% endblock content %}
+</div>
 
-			<div class="col-xs-12 col-md-1  text-center">
-				<a href=https://github.com/Pyrigok/blog>Github</a>
-			</div>
+<footer>
 
-			<div class="col-md-1 col-md-offset-4 text-right">
-				<a href="{% url 'user_app:authors_url' %}">Our Authors</a>
-			</div>
+<div class="row">
 
-			{% if request.user.is_authenticated %}
-				<div class="col-xs-12 col-md-2 text-left">
-					<a href="{% url 'article_app:create_url' %}">Create something</a>
-				</div>
+	<div class="col-xs-12 col-md-2 col-md-offset-1">
+		<p>&copy; 2019 <span>Blog</span></p>
+	</div>
+    
 
-				<div class="col-xs-12 col-md-2 col-md-offset-2 text-center">
-					<a href="#">{{ user.username }}</a>
-					<a href="{% url 'user_app:logout_url' %}">Logout</a>
-				</div>
-
-			{% else %}
-
-				<div class="col-xs-12 col-md-2 col-md-offset-8 text-right">
-					<a href="{% url 'user_app:signup_url' %}">Registration</a> |
-					<a href="{% url 'user_app:login_url' %}">Login</a>
-				</div>
-
-			{% endif %}
-
-		</div>
-
-	</header>
-
-	<div class="row">
-		<div class="col-md-2 col-md-offset-2">
-			<p>Site Info</p>
-		</div>
-		<div class="col-md-4">
-			{% block status_message %}
-				{% if request.GET.status_message %}
-					<div class="alert alert-warning" role="alert">{{ request.GET.status_message }}
-					</div>
-				{% endif %}
-       		{% endblock %}
-		</div>
+	<div class="col-xs-12 col-md-2 col-md-offset-4"><p>
+		 Produced by <span style="font-family: 'Pacifico'; font-style: italic">Vasyl Pyrih</span></p>
 	</div>
 
+    <div class="col-xs-12 col-md-1">
+        <a href=https://github.com/Pyrigok/blog>Github</a>
+    </div>
+    <div class="col-xs-12 col-md-1">
+        <a href="https://www.linkedin.com/in/vasyl-pyrig-5610b0138/">LinkedIn</a>
+    </div>
+</div>
 
-	{% block content %}
-	{% endblock content %}
+</footer>
 
+<!-- jquery -->
+<script
+src="https://code.jquery.com/jquery-2.2.4.js"
+integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+crossorigin="anonymous"></script>
 
-	<footer>
+<!-- jQuery Cookie -->
+<script src="{% static 'scripts/jquery.cookie.js' %}"></script>
+<!--<script src="../../static/scripts/jquery.cookie.js"></script>-->
 
-		<div class="row">
+<!-- bootstrap js -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-			<div class="col-xs-12 col-md-4">
-
-				<p>&copy; 2019 <span>Blog</span></p>
-			</div>
-
-			<div class="col-xs-12 col-md-2 col-md-offset-6"><p>
-				 Produced by <span style="font-family: 'Pacifico'; font-style: italic">Vasyl Pyrih</span></p>
-			</div>
-		</div>
-
-	</footer>
-
-	<!-- jquery -->
-	<script
-	  src="https://code.jquery.com/jquery-2.2.4.js"
-	  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
-	  crossorigin="anonymous"></script>
-
-	 <!-- jQuery Cookie -->
-	 <script src="{% static 'scripts/jquery.cookie.js' %}"></script>
-	 <!--<script src="../../static/scripts/jquery.cookie.js"></script>-->
-
-	<!-- bootstrap js -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-	<!-- our custom cookies -->
-	<script src="{% static 'scripts/cookie.js' %}"></script>
-	<!--<script src="../../static/scripts/cookie.js"></script>-->
+<!-- our custom cookies -->
+<script src="{% static 'scripts/cookie.js' %}"></script>
+<!--<script src="../../static/scripts/cookie.js"></script>-->
 
 </body>
 </html>

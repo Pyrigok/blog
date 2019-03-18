@@ -1,72 +1,54 @@
 {% extends 'home_app/base.html' %}
 
+{% block title %}Create new article{% endblock %}
 {% block content %}
 
-	<div class="container">
+	<div class="row">
 
-		<div class="row">
-
+		<div class="col-xs-12 col-md-6 col-md-offset-3 create_article_div">
+			<hr>
 			
+			<form action="{% url 'article_app:create_url' %}"
+					method="post"
+					role='form'
+					name='create_form'>
+				{% csrf_token %}
 
-			<div class="col-md-6 col-md-offset-3 create_article_div">
+				<div class="category_selector_create">
+					<select name="category" id="">
+
+							{% for category in categories %}
+								<option value="{{ category.id }}">
+									{{ category.category_name }}
+								</option>
+							{% endfor %}
+
+					</select>
+				</div>
+
+						<input type="text"
+								name='title'
+								value="{{ request.POST.title }}"placeholder="Article title"
+								required
+								autofocus
+								>
 				
-				<form action="{% url 'article_app:create_url' %}"
-						method="post"
-						role='form'
-						name='create_form'>
-					{% csrf_token %}
-
-					<div class="category_selector_create">
-						<strong>Article Category</strong>	<select name="category" id="">
-
-								<option value="">All categories</option>
-
-								{% for category in categories %}
-									<option value="{{ category.id }}">
-										{{ category.category_name }}
-									</option>
-								{% endfor %}
-
-							</select>
-					</div>
-
-					<div class="{% if errors.title %}has-error{% endif %}">
-
-						<span class="help-block">
-							<input type="text"
-									name='title'
-									value="{{ request.POST.title }}" placeholder="Article title"
-									autofocus>
-						{{ errors.title }}
-						</span>
-
-					</div>
+						<textarea class='article_content'
+								name="content"
+								placeholder="Article content" 
+								id="article_content"
+								cols="60" rows="5"
+								value='{{ request.POST.content }}'
+								required></textarea>
 					
-					<div class="{% if errors.content %}has-error{% endif %}">
+				<div class="col-xs-12 col-md-1 col-md-offset-11">
+					<button id="create_article_button" type="submit" name='send_button'>Create</button>
+				</div>
 
-						<span class="help-block">
-							<textarea class='article_content'
-									name="content"
-									placeholder="Article content" 
-									id="article_content"
-									cols="60" rows="10"
-									value='{{ request.POST.content }}'></textarea>
-							{{ errors.content }}
-						</span>
+			</form>
 
-					</div>
+		</div> <!-- end form div -->
 
-					<div class="">
-						<button id="create_article_button" type="submit" class="btn create_button" name='send_button'>Create</button>
-					</div>
-
-				</form>
-
-			</div> <!-- end form div -->
-
-		</div> <!-- end row -->
-
-	</div> <!-- end container -->
-
+	</div> <!-- end row -->
 
 {% endblock content %}

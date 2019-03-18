@@ -125,10 +125,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 
-
-
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/users/login/'
+LOGIN_REDIRECT_URL = '/articles/articles/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
